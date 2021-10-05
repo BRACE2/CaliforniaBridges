@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+{# if page and page.meta.plugin_output #}
+{{ page.meta.plugin_output[-1].content }}
+{# endif #}
+{% endblock %}
+
