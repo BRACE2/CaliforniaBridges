@@ -1,0 +1,19 @@
+#
+# strongmotioncenter.org/stationmap_worldwide/all_stations.php
+#
+
+meloland:
+  cesmd: CE01336
+
+crowley:
+  cesmd: CE54730
+
+painter:
+  cesmd: CE89324 # also CE89462
+
+bernardino:
+  cesmd: CE23631
+  calid: 54-823G
+
+hayward: ~
+

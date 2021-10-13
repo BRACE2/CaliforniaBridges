@@ -1,0 +1,27 @@
+
+\providebool{bbx:subentry}
+\newbibmacro*{citenum}{%Note: the original macro was called "cite". I did not redefine "cite", but instead defined a new macro "citenum", because the author-year citations use the "cite" macro too. "\renewbibmacro*{cite}" would have caused all the author-year citations to become numeric too.
+  \printtext[bibhyperref]{%If you ever want to use hyperref
+    \printfield{prefixnumber}%
+    \printfield{labelnumber}%
+    \ifbool{bbx:subentry}
+      {\printfield{entrysetcount}}
+      {}}}
+
+\newbibmacro*{citetitle}{%
+  \iffieldundef{shorthand}
+  {\usebibmacro{cite:title}}%
+  {\usebibmacro{cite:shorthand}}}
+
+\newbibmacro*{cite:title}{%
+  \printtext[bibhyperref]{%
+    \printfield[citetitle]{labeltitle}}}
+
+\DeclareCiteCommand{\citeprgm}
+  {\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:title}%
+   \printtext[bibhyperref]{ [\usebibmacro{citenum}]}%
+   \usebibmacro{related:default}}%
+  {\multicitedelim}
+  {\usebibmacro{postnote}}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Events</h1>
+{% if page and page.meta.plugin_output %}
+{% for i in page.meta.plugin_output %}
+<details>
+<summary>
+<h5>{{ i.name }}</h5> 
+<p>{{i.heading if i.heading else "" }}</p>
+</summary>
+  {{ i.summary }}
+
+  {% if i.preview_data %}
+  <h3>Data Preview</h3>
+  {% for loc, record in i.preview_data.items() %}
+  <h5>{{ k }}</h5>
+  <table>
+    <tr>
+      {% for k in j %}<th>{{ k }}</th>{% endfor %}
+    </tr> 
+  </table>
+  {% endfor %}
+  {{ i.preview_data }}
+  {% endif %}
+  {% if i.table %}
+  <table>
+  {% for j in i.table.rows %}
+    <tr>
+      {% for k in j %}<th>{{ k }}</th>{% endfor %}
+    </tr> 
+  {% endfor %}
+  </table>
+  {% endif %}
+</details>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
