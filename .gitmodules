@@ -1,0 +1,12 @@
+[submodule "Caltrans.Hayward"]
+	path = Caltrans.Hayward
+	url = git@github.com:BRACE2/Caltrans.Hayward
+[submodule "Caltrans.Meloland"]
+	path = Caltrans.Meloland
+	url = git@github.com:BRACE2/Caltrans.Meloland
+[submodule "Caltrans.Bernardino"]
+	path = Caltrans.Bernardino
+	url = git@github.com:BRACE2/Caltrans.Bernardino
+[submodule "Caltrans.Painter"]
+	path = Caltrans.Painter
+	url = git@github.com:BRACE2/Caltrans.Painter
