@@ -1,0 +1,13 @@
+
+$(info "$(SAM_FILE)")
+TCL_MODEL_VERT=1
+OPENSEES=opensees
+
+$(SAM_FILE): $(TCL_MODEL)
+	cat $(TCL_MODEL) - <<< "print -JSON -file $(SAM_FILE)" | $(OPENSEES) 
+
+$(PLOT_REF):
+	render.py --vert $(TCL_MODEL_VERT) -p origin $(SAM_FILE)
+
+.PHONY: $(SAM_FILE)
+
