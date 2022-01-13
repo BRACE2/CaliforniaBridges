@@ -1,0 +1,64 @@
+{
+"StructuralAnalysisModel": {
+	"BIM": "unknown",
+	"description": "",
+	"engineer": "",
+	"units": {
+		"force": "",
+		"length": "",
+		"time": "",
+		"temperature": ""
+	},
+	"properties": {
+		"uniaxialMaterials": [
+			{"name": "1", "type": "Concrete02", "Ec": 4200, "fc": -5.25, "epsc": -0.0025, "fcu": -0.7875, "epscu": -0.00912, "ratio": 0.1, "ft": 0.543427, "Ets": 70},
+			{"name": "2", "type": "Concrete02", "Ec": 5000, "fc": -5, "epsc": -0.002, "fcu": -0.5, "epscu": -0.005, "ratio": 0.1, "ft": 0.53033, "Ets": 70}
+		],
+		"ndMaterials": [
+
+		],
+		"sections": [
+
+		],
+		"crdTransformations": [
+			{"name": "1", "type": "PDeltaCrdTransf3d", "vecInLocXZPlane": [0, 0, -1], "jOffset": [0, -33, 0]},
+			{"name": "2", "type": "LinearCrdTransf3d", "vecInLocXZPlane": [0, 1, 0], "jOffset": [-24, 0, 0]},
+			{"name": "3", "type": "LinearCrdTransf3d", "vecInLocXZPlane": [0, 1, 0], "iOffset": [24, 0, 0]},
+			{"name": "4", "type": "LinearCrdTransf3d", "vecInLocXZPlane": [0, 1, 0]}
+		]
+	},
+	"geometry": {
+		"nodes": [
+			{"name": 1, "ndf": 6, "crd": [-143.5, 0, 0]},
+			{"name": 2, "ndf": 6, "crd": [143.5, 0, 0]},
+			{"name": 3, "ndf": 6, "crd": [-219.1, 297, 0]},
+			{"name": 4, "ndf": 6, "crd": [-143.5, 297, 0]},
+			{"name": 5, "ndf": 6, "crd": [0, 297, 0]},
+			{"name": 6, "ndf": 6, "crd": [143.5, 297, 0]},
+			{"name": 7, "ndf": 6, "crd": [219.1, 297, 0]},
+			{"name": 8, "ndf": 6, "crd": [480.125, 370.5, -1151.95]},
+			{"name": 9, "ndf": 6, "crd": [360.094, 315.375, -863.961]},
+			{"name": 10, "ndf": 6, "crd": [240.063, 333.75, -575.974]},
+			{"name": 11, "ndf": 6, "crd": [120.031, 352.125, -287.987]},
+			{"name": 12, "ndf": 6, "crd": [-152.347, 273.678, 365.522]},
+			{"name": 13, "ndf": 6, "crd": [-304.695, 250.356, 731.044]},
+			{"name": 14, "ndf": 6, "crd": [-457.042, 227.034, 1096.57]}
+		],
+		"elements": [
+			{"name": 1, "type": "ElasticBeam3d", "nodes": [1, 4], "E": 4030.51, "G": 1679.38, "A": 4473.75, "Jx": 4.98393e+06, "Iy": 2.88127e+06, "Iz": 2.10874e+06, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "2"},
+			{"name": 2, "type": "ElasticBeam3d", "nodes": [2, 6], "E": 4030.51, "G": 1679.38, "A": 4473.75, "Jx": 4.98393e+06, "Iy": 2.88127e+06, "Iz": 2.10874e+06, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "3"},
+			{"name": 3, "type": "ElasticBeam3d", "nodes": [3, 4], "E": 4030.51, "G": 1679.38, "A": 4473.75, "Jx": 4.98393e+06, "Iy": 2.88127e+06, "Iz": 2.10874e+06, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "2"},
+			{"name": 4, "type": "ElasticBeam3d", "nodes": [4, 5], "E": 4030.51, "G": 1679.38, "A": 4473.75, "Jx": 4.98393e+06, "Iy": 2.88127e+06, "Iz": 2.10874e+06, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "3"},
+			{"name": 5, "type": "ElasticBeam3d", "nodes": [5, 6], "E": 4030.51, "G": 1679.38, "A": 4473.75, "Jx": 4.98393e+06, "Iy": 2.88127e+06, "Iz": 2.10874e+06, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "2"},
+			{"name": 6, "type": "ElasticBeam3d", "nodes": [6, 7], "E": 4030.51, "G": 1679.38, "A": 4473.75, "Jx": 4.98393e+06, "Iy": 2.88127e+06, "Iz": 2.10874e+06, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "3"},
+			{"name": 7, "type": "ElasticBeam3d", "nodes": [8, 9], "E": 4030.51, "G": 1679.38, "A": 9462.97, "Jx": 2.0371e+08, "Iy": 6.10813e+06, "Iz": 1.9761e+08, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "4"},
+			{"name": 8, "type": "ElasticBeam3d", "nodes": [9, 10], "E": 4030.51, "G": 1679.38, "A": 9462.97, "Jx": 2.0371e+08, "Iy": 6.10813e+06, "Iz": 1.9761e+08, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "4"},
+			{"name": 9, "type": "ElasticBeam3d", "nodes": [10, 11], "E": 4030.51, "G": 1679.38, "A": 9462.97, "Jx": 2.0371e+08, "Iy": 6.10813e+06, "Iz": 1.9761e+08, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "4"},
+			{"name": 10, "type": "ElasticBeam3d", "nodes": [11, 5], "E": 4030.51, "G": 1679.38, "A": 9462.97, "Jx": 2.0371e+08, "Iy": 6.10813e+06, "Iz": 1.9761e+08, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "4"},
+			{"name": 11, "type": "ElasticBeam3d", "nodes": [5, 12], "E": 4030.51, "G": 1679.38, "A": 9462.97, "Jx": 2.0371e+08, "Iy": 6.10813e+06, "Iz": 1.9761e+08, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "4"},
+			{"name": 12, "type": "ElasticBeam3d", "nodes": [12, 13], "E": 4030.51, "G": 1679.38, "A": 9462.97, "Jx": 2.0371e+08, "Iy": 6.10813e+06, "Iz": 1.9761e+08, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "4"},
+			{"name": 13, "type": "ElasticBeam3d", "nodes": [13, 14], "E": 4030.51, "G": 1679.38, "A": 9462.97, "Jx": 2.0371e+08, "Iy": 6.10813e+06, "Iz": 1.9761e+08, "massperlength": 0, "releasez": 0, "releasey": 0, "crdTransformation": "4"}
+		]
+	}
+}
+}

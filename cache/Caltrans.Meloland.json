@@ -1,0 +1,47 @@
+{
+"StructuralAnalysisModel": {
+	"BIM": "unknown",
+	"description": "",
+	"engineer": "",
+	"units": {
+		"force": "",
+		"length": "",
+		"time": "",
+		"temperature": ""
+	},
+	"properties": {
+		"uniaxialMaterials": [
+
+		],
+		"ndMaterials": [
+
+		],
+		"sections": [
+
+		],
+		"crdTransformations": [
+			{"name": "1", "type": "LinearCrdTransf3d", "vecInLocXZPlane": [0, 0, 1]},
+			{"name": "2", "type": "LinearCrdTransf3d", "vecInLocXZPlane": [0, 0, 1], "jOffset": [0, -36.4528, 0]}
+		]
+	},
+	"geometry": {
+		"nodes": [
+			{"name": 0, "ndf": 6, "crd": [0, 324.453, 0], "mass": [0, 0, 0, 0, 0, 0]},
+			{"name": 1, "ndf": 6, "crd": [3180, 324.453, 0], "mass": [0, 0, 0, 0, 0, 0]},
+			{"name": 2, "ndf": 6, "crd": [1752, 324.453, 0], "mass": [0, 0, 0, 0, 0, 0]},
+			{"name": 3, "ndf": 6, "crd": [1608.82, 324.453, 177.439], "mass": [0, 0, 0, 0, 0, 0]},
+			{"name": 4, "ndf": 6, "crd": [1608.82, 0, 177.439], "mass": [0, 0, 0, 0, 0, 0]},
+			{"name": 5, "ndf": 6, "crd": [1895.18, 324.453, -177.439], "mass": [0, 0, 0, 0, 0, 0]},
+			{"name": 6, "ndf": 6, "crd": [1895.18, 0, -177.439], "mass": [0, 0, 0, 0, 0, 0]},
+			{"name": 7, "ndf": 6, "crd": [0, 324.453, 0], "mass": [0, 0, 0, 0, 0, 0]},
+			{"name": 8, "ndf": 6, "crd": [3180, 324.453, 0], "mass": [0, 0, 0, 0, 0, 0]}
+		],
+		"elements": [
+			{"name": 0, "type": "ElasticBeam3d", "nodes": [0, 2], "E": 4.074e+06, "G": 1.698e+06, "A": 6476, "Jx": 7.951e+07, "Iy": 7.498e+07, "Iz": 4.525e+06, "massperlength": 1.40742, "releasez": 0, "releasey": 0, "crdTransformation": "1"},
+			{"name": 1, "type": "ElasticBeam3d", "nodes": [4, 3], "E": 4.074e+06, "G": 1.698e+06, "A": 2827, "Jx": 1.272e+06, "Iy": 636200, "Iz": 636200, "massperlength": 0.614511, "releasez": 0, "releasey": 0, "crdTransformation": "2"},
+			{"name": 2, "type": "ElasticBeam3d", "nodes": [6, 5], "E": 4.074e+06, "G": 1.698e+06, "A": 2827, "Jx": 1.272e+06, "Iy": 636200, "Iz": 636200, "massperlength": 0.614511, "releasez": 0, "releasey": 0, "crdTransformation": "2"},
+			{"name": 3, "type": "ElasticBeam3d", "nodes": [2, 1], "E": 4.074e+06, "G": 1.698e+06, "A": 6476, "Jx": 7.951e+07, "Iy": 7.498e+07, "Iz": 4.525e+06, "massperlength": 1.40742, "releasez": 0, "releasey": 0, "crdTransformation": "1"}
+		]
+	}
+}
+}
