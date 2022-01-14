@@ -2,6 +2,7 @@
 $(info "$(SAM_FILE)")
 TCL_MODEL_VERT=1
 OPENSEES=opensees
+SAM_FILE = cache/sam.json
 
 $(SAM_FILE): $(TCL_MODEL)
 	cat $(TCL_MODEL) - <<< "print -JSON -file $(SAM_FILE)" | $(OPENSEES) 
