@@ -7,8 +7,9 @@ SAM_FILE = cache/sam.json
 $(SAM_FILE): $(TCL_MODEL)
 	cat $(TCL_MODEL) - <<< "print -JSON -file $(SAM_FILE)" | $(OPENSEES) 
 
-model%.png:
-	render.py --vert $(TCL_MODEL_VERT) -p origin $(SAM_FILE)
+render.%:
+	render.py --axes $(TCL_MODEL_VERT) --show origin $(SAM_FILE) -o $@
+
 
 .PHONY: $(SAM_FILE)
 
