@@ -10,3 +10,6 @@
 [submodule "Caltrans.Painter"]
 	path = Caltrans.Painter
 	url = git@github.com:BRACE2/Caltrans.Painter
+[submodule "Caltrans.Crowley"]
+	path = Caltrans.Crowley
+	url = git@github.com:BRACE2/Caltrans.Crowley
