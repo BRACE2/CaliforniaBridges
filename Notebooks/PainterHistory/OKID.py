@@ -1,7 +1,9 @@
 import numpy as np
 from numpy import zeros, pi, size
-from numpy.linalg import svd, solve
-linsolve = solve
+import scipy.linalg
+
+linsolve = scipy.linalg.solve
+svd = lambda *args: scipy.linalg.svd(*args, lapack_driver="gesvd")
 lsqminnorm = lambda *args: np.linalg.lstsq(*args, rcond=None)[0]
 
 def okid(dati, dato, **config):
@@ -109,12 +111,11 @@ def okid(dati, dato, **config):
 
     # Compute matrix U that represents ARX equation of current output on p time steps of past output
     # & input values (Eq. 3.76)
-    print("l,m,r = ", l,m,r)
     U = np.zeros(((m+r)*p+r, l))
     U[:r,:] = dati.T
     for b in range(1,p+1):
-        U[(b-1)*(r+m)+r:(b-1)*(r+m)+r+r+m, b-1:l+1] = \
-                [*dati[:l-b+1,:r].T, *dato[:l-b+1, :m].T]
+        U[(b-1)*(r+m)+r:(b-1)*(r+m)+r+r+m, b:] = \
+                [*dati[:-b,:r].T, *dato[:-b, :m].T]
 
 
     # i) Compute the matrix of Observer Markov Parameter Matrix (M) 
@@ -130,9 +131,7 @@ def okid(dati, dato, **config):
 
     s = np.diag(wr)
 
-    print(U.shape, uu.shape, v.shape, s.shape)
     pss = v.T[:,:pg]@linsolve(s[:pg,:pg], uu[:,:pg].T)
-    print(pss.shape)
     M = dato.T@pss           #M: Observer Markov Parameter Matrix
 
     # Fit for multiple regression
@@ -155,7 +154,6 @@ def okid(dati, dato, **config):
     #      (Equation 6.21 in Juang 1994)
 
     # Matrix D is directly equal to the Observer Markov parameter matrix (Eq. 3.77)
-    print(m, M.shape)
     M1 = D = M[:, :r]  # D: Direct Transmission term, one of 4 system matrices of state space model
     M2 =  M[:, r:]
 
@@ -164,13 +162,12 @@ def okid(dati, dato, **config):
     # First p steps (Eq. 3.78)
     for i in range(p):
         Y.append(
-            M[:, r+i*(r+m)+1:r+i*(r+m)+r] + sum(
-                M[:, r+lok*(r+m)+1+r:r+lok*(r+m)+r+m]*Y[i-lok]
-                for lok in range(i)
+            M[:, r+i*(r+m):r+i*(r+m)+r] + sum(
+                M[:, r+j*(r+m)+r:r+j*(r+m)+r+m]@Y[i-j]
+                for j in range(i+1)
             )
         )
 
-    return locals()
     # From p+1 to rest (Eq. 3.79)
     for ol in range(p, dn+kmax+1):
         sumt = zeros((m,r))
@@ -178,29 +175,34 @@ def okid(dati, dato, **config):
             sumt += M[:,r+j*(r+m)+r:r+j*(r+m)+r+m]@Y[ol-j]
 
         Y.append(sumt)
+
     # Now, the Markow parameters Y have been computed.
     
     ## 2b. Establish Hankel matrix (H) from the Markov parameters (Y) (Eq. 3.80)
     
     # psz = 1000;   psz is replaced by kmax and used as an imput parameter
     # Obtain Hankel Matrix of Zeroth Order & First Order
+    H0,H1 = np.zeros((2, kmax*m, l*r))
     for hj in range(kmax):
         for jh in range(l):
-            H0[(hj-1)*m+1:hj*m, (jh-1)*r+1:jh*r] = Y[jh+hj]
-            H1[(hj-1)*m+1:hj*m, (jh-1)*r+1:jh*r] = Y[jh+hj+1]
+            H0[hj*m:hj*m+m, jh*r:jh*r+r] = Y[jh+hj+1]
+            H1[hj*m:hj*m+m, jh*r:jh*r+r] = Y[jh+hj+3]
 
     ## 2c. Use H matrix to compute system matrices A, B & C
-    R1,Sis,S1 = svd(H0) # singular value decomposition
+    R1,sis,S1 = svd(H0) # singular value decomposition
+    #R1,Sis,S1 = svds(H0, k=n) # singular value decomposition
+    Sis = np.diag(sis[:n])
 
-
+    siv = np.diag(1/np.sqrt(sis[:n]))
     # A: state transition matrix (Eqs. 3.32 & 3.82)
-    A  = Sis[:n,:n]**(-0.5)*R1[:,:n].T*H1*S1[:,:n]*Sis[:n,:n]**(-0.5)
-    Qb = Sis[:n,:n]**0.5*S1[:,:n].T
+    A  = siv@R1[:,:n].T@H1@S1[:,:n]@siv
+    Qb = Sis[:n,:n]**0.5@S1[:,:n].T
     # B: input influence matrix (Eqs. 3.32 & 3.83)
     B  = Qb[:,:r]
-    Pb = R1[:,:n]*Sis[:n,:n]**0.5 
+    Pb = R1[:,:n]@np.sqrt(Sis)
     # C: output influence matrix (Eqs. 3.34 & 3.84)
     C  = Pb[:m,:]
+    return locals()
     return A,B,C,D
 
 
@@ -221,15 +223,15 @@ def validate(inputs, outputs, system, **config):
 
     """
     A,B,C,D = system
-    def mpc():
+    def mpc(modes_raw):
         """a) Modal Phase Collinearity (MPC) [Eqs. 3.85-3.87]"""
         for q in range(n):
             sxx[:,q] = np.real(modes_raw[:,q]).T@np.real(modes_raw[:,q])
             syy[:,q] = np.imag(modes_raw[:,q]).T@np.imag(modes_raw[:,q])
             sxy[:,q] = np.real(modes_raw[:,q]).T@np.imag(modes_raw[:,q])
             nu[q]    = (syy[:,q]-sxx[:,q])/(2*sxy[:,q])
-            lam[1,q] = (sxx[:,q]+syy[:,q])/2+sxy[:,q]*(nu[q]**2+1)**0.5;
-            lam[2,q] = (sxx[:,q]+syy[:,q])/2-sxy[:,q]*(nu[q]**2+1)**0.5;
+            lam[1,q] = (sxx[:,q]+syy[:,q])/2 + sxy[:,q]*np.sqrt(nu[q]**2+1);
+            lam[2,q] = (sxx[:,q]+syy[:,q])/2 - sxy[:,q]*np.sqrt(nu[q]**2+1);
             mpc[q]   = ((lam[0,q]-lam[1,q])/(lam[0,q]+lam[1,q]))**2;
 
 
