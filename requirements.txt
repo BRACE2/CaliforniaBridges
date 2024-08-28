@@ -1,3 +1,6 @@
 mdof
 opensees
 sees
+numpy
+pandas
+matplotlib
