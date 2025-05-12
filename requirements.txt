@@ -1,6 +1,7 @@
 mdof
 opensees
-sees
+xara
+veux
 numpy
 pandas
 matplotlib
